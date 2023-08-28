@@ -3,13 +3,15 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import java.util.Set;
 
 public class SeparetedLinks {
-    protected StringBuilder readWebsite(String url) throws IOException {
-        URL pracuj = new URL(url);
-        BufferedReader in = new BufferedReader(new InputStreamReader(pracuj.openStream()));
+    private StringBuilder readWebsite(String url) throws IOException, URISyntaxException {
+        URI pracuj = new URI(url);
+        BufferedReader in = new BufferedReader(new InputStreamReader(pracuj.toURL().openStream()));
 
         String inputLine;
         StringBuilder stringBuilder = new StringBuilder();
@@ -23,7 +25,7 @@ public class SeparetedLinks {
     }
 
     private void getAllLinksFromPage(Set<String> links, String offersSection) {
-        String splittedToLink = "";
+        String splittedToLink;
         for (int i = 0; i < offersSection.length(); i++) {
             if (i < 0) {
                 break;
@@ -43,11 +45,12 @@ public class SeparetedLinks {
     void addLinksToList(Set<String> links, String website) throws IOException {
         String offersDiv;
         StringBuilder pracujWebsite;
+        boolean isEnded = false;
         try {
             pracujWebsite = readWebsite(website);
             offersDiv = getOffersDiv(pracujWebsite.toString());
             getAllLinksFromPage(links, offersDiv);
-        } catch (StringIndexOutOfBoundsException e) {
+        } catch (StringIndexOutOfBoundsException | URISyntaxException ignored) {
 
         }
     }

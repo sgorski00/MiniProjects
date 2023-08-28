@@ -1,15 +1,14 @@
 package org.example;
 
 import javax.swing.*;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
-public class SaveFiles {
+public class OperationsOnFiles {
     static final String PATH_TO_LINKS = new JFileChooser().getFileSystemView().getDefaultDirectory().toString() + "\\links\\";
     private static void writeToFile(String fileName, String link) throws IOException {
         try {
@@ -30,5 +29,9 @@ public class SaveFiles {
             writeToFile(PATH_TO_LINKS + i + ".url", "[InternetShortcut]\nURL=" + link);
             i++;
         }
+    }
+
+    static void deleteFiles(){
+        Arrays.stream(Objects.requireNonNull(new File(PATH_TO_LINKS).listFiles())).forEach(File::delete);
     }
 }
