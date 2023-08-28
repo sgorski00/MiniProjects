@@ -1,3 +1,1 @@
-Refactor
-Open another pages
-Save all links to file
+MULTITHREADING - time before = 69550 ms

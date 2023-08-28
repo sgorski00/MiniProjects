@@ -1,48 +1,49 @@
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Pracuj {
+    private static final String PRACUJ_PL_URL = "https://www.pracuj.pl/praca/warszawa;wp?rd=0&pn=";
+
     public static void main(String[] args) throws Exception {
-        URL pracuj = new URL("https://www.pracuj.pl/praca/legnica;wp?rd=10/");
-        BufferedReader in = new BufferedReader(new InputStreamReader(pracuj.openStream()));
-
-        String inputLine;
-        StringBuilder stringBuilder = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            stringBuilder.append(inputLine);
-            stringBuilder.append(System.lineSeparator());
-        }
-        in.close();
-
-        String content = stringBuilder.toString();
+        ExecutorService executorService = Executors.newFixedThreadPool(20);
+        SeparetedLinks separetedLinks = new SeparetedLinks();
         Set<String> links = new TreeSet<>();
 
-        int index = content.indexOf("<body>");
-        String substring = content.substring(index);
-        String splittedToBody = substring.split("<div data-test=\"job-offers-bottom-pagination\"")[0];
-        String splittedToLink;
-        try {
-            for (int i = 0; i < splittedToBody.length(); i++) {
-                if (i < 0) {
-                    break;
-                }
-                i = splittedToBody.indexOf("https://www.pracuj.pl/praca/", i);
-                splittedToLink = splittedToBody.substring(i);
-                String finalLink = splittedToLink.split("\"")[0];
-                links.add(finalLink);
-            }
-        } catch(IndexOutOfBoundsException e){
+        long start = System.currentTimeMillis();
 
-        }finally {
-            links.forEach(System.out::println);
-            System.out.println(links.size());
+        try {
+            OperationsOnFiles.deleteFiles();
+            getLinks(separetedLinks, links);
+        } finally {
+            ArrayList<String> listOfLinks = new ArrayList<>(links);
+            OperationsOnFiles.saveFiles(listOfLinks);
+            System.out.println("Saved " + listOfLinks.size() + " links.");
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
+        executorService.shutdown();
+    }
+
+    private static void getLinks(SeparetedLinks separetedLinks, Set<String> links) throws IOException {
+        int i = 1;
+        int startValue;
+        int endValue;
+
+        while (IsUrlValid.isValid(PRACUJ_PL_URL + i)) {
+            startValue = links.size();
+            separetedLinks.addLinksToList(links, PRACUJ_PL_URL + i);
+            endValue = links.size();
+            if (startValue == endValue) {
+                break;
+            }
+            i++;
         }
     }
 }
