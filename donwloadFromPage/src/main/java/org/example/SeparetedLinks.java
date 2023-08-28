@@ -45,13 +45,10 @@ public class SeparetedLinks {
     void addLinksToList(Set<String> links, String website) throws IOException {
         String offersDiv;
         StringBuilder pracujWebsite;
-        boolean isEnded = false;
         try {
             pracujWebsite = readWebsite(website);
             offersDiv = getOffersDiv(pracujWebsite.toString());
             getAllLinksFromPage(links, offersDiv);
-        } catch (StringIndexOutOfBoundsException | URISyntaxException ignored) {
-
-        }
+        } catch (StringIndexOutOfBoundsException | URISyntaxException ignored) {}
     }
 }
