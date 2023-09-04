@@ -1,15 +1,16 @@
 package org.example;
 
+import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Optional;
 
 public class IsUrlValid {
-    static boolean isValid(String url){
+    Optional<URL> getValid(String url){
         try{
-            new URI(url);
-            return true;
-        } catch (URISyntaxException e) {
-            return false;
+            return Optional.of(URI.create(url).toURL());
+        } catch (MalformedURLException e) {
+            return Optional.empty();
         }
     }
 }

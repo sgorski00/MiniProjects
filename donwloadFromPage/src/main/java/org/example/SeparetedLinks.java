@@ -36,22 +36,26 @@ public class SeparetedLinks {
             links.add(finalLink);
         }
     }
-    private String getOffersDiv(String fullPage) {
-        int index = fullPage.indexOf("<body>");
-        String substring = fullPage.substring(index);
-        return substring.split("<div data-test=\"job-offers-bottom-pagination\"")[0];
+    private String getOffersDiv(String website) throws IOException, URISyntaxException {
+        String result = getElement(readWebsite(website).toString(), "<body>");
+        return result.split("<div data-test=\"job-offers-bottom-pagination\"")[0];
+    }
+
+    String getMaxPageNumber(String websiteLink) throws IOException, URISyntaxException {
+        String result = getElement(readWebsite(websiteLink).toString(), "\"top-pagination-max-page-number\">");
+        result = result.split("</span>")[0];
+        result = result.substring(result.indexOf(">") + 1);
+        return result;
+    }
+
+    private String getElement(String fullPage, String textToGetIndex) {
+        int index = fullPage.indexOf(textToGetIndex);
+        return fullPage.substring(index);
     }
 
     void addLinksToList(Set<String> links, String website) throws IOException {
-        String offersDiv;
-        StringBuilder pracujWebsite;
-        boolean isEnded = false;
         try {
-            pracujWebsite = readWebsite(website);
-            offersDiv = getOffersDiv(pracujWebsite.toString());
-            getAllLinksFromPage(links, offersDiv);
-        } catch (StringIndexOutOfBoundsException | URISyntaxException ignored) {
-
-        }
+            getAllLinksFromPage(links, getOffersDiv(website));
+        } catch (StringIndexOutOfBoundsException | URISyntaxException ignored) {}
     }
 }

@@ -1,25 +1,22 @@
 package org.example;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Pracuj {
-    private static final String PRACUJ_PL_URL = "https://www.pracuj.pl/praca/warszawa;wp?rd=0&pn=";
+    private static final String PRACUJ_PL_URL = "https://www.pracuj.pl/praca/wroclaw;wp?rd=0&pn=";
+    private static SeparetedLinks separetedLinks = new SeparetedLinks();
 
     public static void main(String[] args) throws Exception {
-        ExecutorService executorService = Executors.newFixedThreadPool(20);
-        SeparetedLinks separetedLinks = new SeparetedLinks();
         Set<String> links = new TreeSet<>();
-
         long start = System.currentTimeMillis();
 
         try {
             OperationsOnFiles.deleteFiles();
-            getLinks(separetedLinks, links);
+            getLinks(links);
         } finally {
             ArrayList<String> listOfLinks = new ArrayList<>(links);
             OperationsOnFiles.saveFiles(listOfLinks);
@@ -28,22 +25,12 @@ public class Pracuj {
 
         long end = System.currentTimeMillis();
         System.out.println(end - start);
-        executorService.shutdown();
     }
 
-    private static void getLinks(SeparetedLinks separetedLinks, Set<String> links) throws IOException {
-        int i = 1;
-        int startValue;
-        int endValue;
-
-        while (IsUrlValid.isValid(PRACUJ_PL_URL + i)) {
-            startValue = links.size();
+    private static void getLinks(Set<String> links) throws IOException, URISyntaxException {
+        int maxPage = Integer.parseInt(separetedLinks.getMaxPageNumber(PRACUJ_PL_URL));
+        for(int i = 1; i<=maxPage; i++) {
             separetedLinks.addLinksToList(links, PRACUJ_PL_URL + i);
-            endValue = links.size();
-            if (startValue == endValue) {
-                break;
-            }
-            i++;
         }
     }
 }
