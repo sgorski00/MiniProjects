@@ -1,0 +1,2 @@
+Add Hibernate dependency in Maven
+PostegreSQL
