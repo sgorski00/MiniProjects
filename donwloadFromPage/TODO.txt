@@ -1,1 +1,1 @@
-MULTITHREADING - time before = 69550 ms
+MULTITHREADING - time before = 25087
