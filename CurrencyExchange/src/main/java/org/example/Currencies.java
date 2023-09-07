@@ -1,6 +1,7 @@
 package org.example;
 
 import org.javamoney.moneta.FastMoney;
+import org.javamoney.moneta.Money;
 
 import javax.money.*;
 
@@ -11,31 +12,31 @@ public class Currencies {
         return FastMoney.of(0, cu);
     }
 
-    private MonetaryAmount usdAmount = createCurrency("USD");
-    private MonetaryAmount eurAmount = createCurrency("EUR");
-    private MonetaryAmount plnAmount = createCurrency("PLN");
+    private Money usdAmount = Money.from(createCurrency("USD"));
+    private Money eurAmount = Money.from(createCurrency("EUR"));
+    private Money plnAmount = Money.from(createCurrency("PLN"));
 
-    protected MonetaryAmount usdAmount() {
+    protected Money usdAmount() {
         return usdAmount;
     }
 
     protected void setUsdAmount(Number value) {
-        usdAmount = FastMoney.of(value, usdAmount.getCurrency());
+        usdAmount = Money.of(value, usdAmount.getCurrency());
     }
 
-    protected MonetaryAmount eurAmount() {
+    protected Money eurAmount() {
         return eurAmount;
     }
 
     protected void setEurAmount(Number value) {
-        eurAmount = FastMoney.of(value, eurAmount.getCurrency());
+        eurAmount = Money.of(value, eurAmount.getCurrency());
     }
 
-    protected MonetaryAmount plnAmount() {
+    protected Money plnAmount() {
         return plnAmount;
     }
 
-    protected MonetaryAmount setPlnAmount(Number value) {
-        return FastMoney.of(value, plnAmount.getCurrency());
+    protected Money setPlnAmount(Number value) {
+        return Money.of(value, plnAmount.getCurrency());
     }
 }

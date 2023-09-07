@@ -1,17 +1,17 @@
 package org.example;
 
-import javax.money.MonetaryAmount;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+    private static final ListOfTasks print = new ListOfTasks();
     private static final Input scanner = new Input();
-        private static final List<User> listOfUsers = new ArrayList<>();
-//    private static final Map<User, Wallet> walletOfUser = new HashMap<>();
-    private static final Operations op = new Operations();
+    private static final List<User> listOfUsers = new ArrayList<>();
+    //    private static final Map<User, Wallet> walletOfUser = new HashMap<>();
+    private static final Wallet wallet = new Wallet();
 
 
-    static{
+    static {
         User sgorski00 = new User("sgorski00", "12345");
         User latuszka = new User("latuszka", "Latka@@@");
         User daga33 = new User("daga33", "qwertyuiop");
@@ -23,20 +23,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        MonetaryAmount usd = op.usdAmount();
-        MonetaryAmount eur = op.eurAmount();
-        MonetaryAmount pln = op.setPlnAmount(1000);
-
-        usd = op.addMoney(48.583, usd);
-        eur = op.removeMoney(400, eur);
-        eur = op.addMoney(10000, eur);
-        pln = op.addMoney(40, pln);
-        System.out.printf("%s%n%s%n%s", usd, eur, pln);
-
-        //your sum of money in wallet:
-        //what would you like to do?
-        //list of operations to choose
-
+        print.userChoice();
     }
 
 //    private static void logIn() {
