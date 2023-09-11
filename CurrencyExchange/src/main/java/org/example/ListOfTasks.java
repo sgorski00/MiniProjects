@@ -41,12 +41,8 @@ public class ListOfTasks {
                 }
                 case 2 -> {
                     wallet.printListOfCurrencies();
-                    int i = (int) scanner.scannerNumber();
-                    if (i <= wallet.listOfCurrencies.size()) {
-                        op.getSumOfMoney(wallet.allMoney, wallet.listOfCurrencies.get(i));
-                    } else {
-                        System.out.println("Wrong number");
-                    }
+                    int choosedCurrency = (int) scanner.scannerNumber();
+                    op.getSumOfMoney(wallet.listOfCurrencies, choosedCurrency);
                     scanner.pressEnterToContinue();
                 }
                 case 3 -> {

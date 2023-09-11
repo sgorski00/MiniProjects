@@ -5,10 +5,12 @@ import java.util.List;
 
 public class Main {
     private static final ListOfTasks print = new ListOfTasks();
-    private static final Input scanner = new Input();
     private static final List<User> listOfUsers = new ArrayList<>();
     //    private static final Map<User, Wallet> walletOfUser = new HashMap<>();
-    private static final Wallet wallet = new Wallet();
+    //4291.19
+    //462,19
+    //1000
+    //2154,54
 
 
     static {
