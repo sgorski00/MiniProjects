@@ -10,7 +10,7 @@ public class Wallet {
     Map<Integer, Money> listOfCurrencies = new HashMap<>();
     private final Money usd = op.usdAmount();
     private final Money eur = op.eurAmount();
-    private final Money pln = op.setPlnAmount(1000);
+    private final Money pln = op.plnAmount();
 
 //    String walletName;
 //    int walletPin;

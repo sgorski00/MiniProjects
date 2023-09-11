@@ -7,11 +7,6 @@ public class Main {
     private static final ListOfTasks print = new ListOfTasks();
     private static final List<User> listOfUsers = new ArrayList<>();
     //    private static final Map<User, Wallet> walletOfUser = new HashMap<>();
-    //4291.19
-    //462,19
-    //1000
-    //2154,54
-
 
     static {
         User sgorski00 = new User("sgorski00", "12345");

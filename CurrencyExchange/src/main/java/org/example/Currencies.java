@@ -12,31 +12,19 @@ public class Currencies {
         return FastMoney.of(0, cu);
     }
 
-    private Money usdAmount = Money.from(createCurrency("USD"));
-    private Money eurAmount = Money.from(createCurrency("EUR"));
-    private Money plnAmount = Money.from(createCurrency("PLN"));
+    private final Money usdAmount = Money.from(createCurrency("USD"));
+    private final Money eurAmount = Money.from(createCurrency("EUR"));
+    private final Money plnAmount = Money.from(createCurrency("PLN"));
 
     protected Money usdAmount() {
         return usdAmount;
-    }
-
-    protected void setUsdAmount(Number value) {
-        usdAmount = Money.of(value, usdAmount.getCurrency());
     }
 
     protected Money eurAmount() {
         return eurAmount;
     }
 
-    protected void setEurAmount(Number value) {
-        eurAmount = Money.of(value, eurAmount.getCurrency());
-    }
-
     protected Money plnAmount() {
         return plnAmount;
-    }
-
-    protected Money setPlnAmount(Number value) {
-        return Money.of(value, plnAmount.getCurrency());
     }
 }

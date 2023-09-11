@@ -10,12 +10,19 @@ import java.util.Map;
 
 public class Operations extends Currencies {
 
-    public Money addMoney(double value, MonetaryAmount amountCurrency) {
-        return Money.from(amountCurrency.add(Money.of(value, amountCurrency.getCurrency())));
+    public Money addMoney(double value, MonetaryAmount currency) {
+        return Money.from(currency.add(Money.of(value, currency.getCurrency())));
     }
 
-    public Money removeMoney(double value, MonetaryAmount amountCurrency) {
-        return Money.from(amountCurrency.subtract(Money.of(value, amountCurrency.getCurrency())));
+    public Money removeMoney(double value, MonetaryAmount currency) {
+        return Money.from(currency.subtract(Money.of(value, currency.getCurrency())));
+    }
+
+    public Money setMoney(double value, MonetaryAmount currency){
+        Money cur = Money.from(currency);
+        currency = currency.subtract(cur);
+        currency = addMoney(value, currency);
+        return Money.from(currency);
     }
 
     private CurrencyConversion convertTo(MonetaryAmount currency) {
