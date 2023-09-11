@@ -21,21 +21,23 @@ public class Wallet {
 //    Map<walletname, money>
 
     {
-        usd = op.addMoney(1000, usd);
-        eur = op.addMoney(500, eur);
         allMoney.add(usd);
         allMoney.add(eur);
         allMoney.add(pln);
-    }
-
-    void loadAndPrintListOfCurrencies(){
         listOfCurrencies.put(1, pln);
         listOfCurrencies.put(2, usd);
         listOfCurrencies.put(3, eur);
+    }
 
-        System.out.println("Select currency:");
-        for(int i = 1; i<listOfCurrencies.size()+1; i++){
+    void printListOfCurrencies(){
+        for(int i = 1; i<=listOfCurrencies.size(); i++){
             System.out.printf("%d. %s%n", i, listOfCurrencies.get(i).getCurrency());
+        }
+    }
+
+    void printListOfAmmountOfCurrencies(){
+        for(int i = 1; i<=listOfCurrencies.size(); i++){
+            System.out.printf("%d. %s%n", i, listOfCurrencies.get(i));
         }
     }
 }
