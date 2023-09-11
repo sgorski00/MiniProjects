@@ -1,5 +1,7 @@
 package org.example;
 
+import org.javamoney.moneta.Money;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +12,7 @@ public class ListOfTasks {
     Input scanner = new Input();
 
     private void printTasks() {
-        System.out.println("Hello! What would you like to do?");
+        System.out.println("Enter number");
         loadTasksList();
         for (Integer i : tasks.keySet()) {
             System.out.printf("%d. %s%n", i, tasks.get(i));
@@ -27,33 +29,56 @@ public class ListOfTasks {
         tasks.put(7, "Exit");
     }
 
-    void userChoice() {
-        int choice = 0;
+    void menu() {
+        int choice;
         do {
             printTasks();
             choice = (int) scanner.scannerNumber();
             switch (choice) {
                 case 1 -> {
-                    System.out.printf("%s%n%s%n%s%n", wallet.usd, wallet.eur, wallet.pln);
-                    //press any button to continue
+                    wallet.printListOfAmmountOfCurrencies();
+                    scanner.pressEnterToContinue();
                 }
                 case 2 -> {
-                    wallet.loadAndPrintListOfCurrencies();
+                    wallet.printListOfCurrencies();
                     int i = (int) scanner.scannerNumber();
-                    if (i < wallet.listOfCurrencies.size() + 1) {
+                    if (i <= wallet.listOfCurrencies.size()) {
                         op.getSumOfMoney(wallet.allMoney, wallet.listOfCurrencies.get(i));
                     } else {
                         System.out.println("Wrong number");
                     }
+                    scanner.pressEnterToContinue();
                 }
                 case 3 -> {
-                    wallet.loadAndPrintListOfCurrencies();
+                    wallet.printListOfCurrencies();
                     int i = (int) scanner.scannerNumber();
-                    System.out.println("Eneter amount of money:");
+                    System.out.println("Enter amount of money:");
                     double amount = scanner.scannerNumber();
-                    op.addMoney(amount, wallet.listOfCurrencies.get(i));
-                    //it should modificate value in MonetaryAmount and in Map.
-                    System.out.println(wallet.listOfCurrencies.get(i));
+                    if(wallet.listOfCurrencies.containsKey(i)){
+                        Money temp = op.addMoney(amount, wallet.listOfCurrencies.get(i));
+                        wallet.listOfCurrencies.put(i, temp);
+                    }
+                    System.out.printf("%s %s %s%n", "Added",amount, wallet.listOfCurrencies.get(i).getCurrency());
+                    scanner.pressEnterToContinue();
+                }
+                case 4 -> {
+                    wallet.printListOfCurrencies();
+                    int i = (int) scanner.scannerNumber();
+                    System.out.println("Enter amount of money:");
+                    double amount = scanner.scannerNumber();
+                    if(wallet.listOfCurrencies.containsKey(i)){
+                        Money temp = op.removeMoney(amount, wallet.listOfCurrencies.get(i));
+                        wallet.listOfCurrencies.put(i, temp);
+                    }
+                    System.out.printf("%s %s %s%n", "Removed",amount, wallet.listOfCurrencies.get(i).getCurrency());
+                    scanner.pressEnterToContinue();
+                }
+                case 5 -> {
+                    wallet.printListOfCurrencies();
+                    int i = (int) scanner.scannerNumber();
+                    System.out.println("Enter amount of money:");
+                    int amount = (int) scanner.scannerNumber();
+
                 }
                 case 7 -> System.out.println("The program has ended");
             }

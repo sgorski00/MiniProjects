@@ -6,7 +6,6 @@ import javax.money.MonetaryAmount;
 import javax.money.convert.CurrencyConversion;
 import javax.money.convert.ExchangeRateProvider;
 import javax.money.convert.MonetaryConversions;
-import java.net.SocketTimeoutException;
 import java.util.List;
 
 public class Operations extends Currencies {
@@ -31,6 +30,4 @@ public class Operations extends Currencies {
         }
         System.out.println(sumMoney);
     }
-    //change main currency
-    //exit wallet
 }
