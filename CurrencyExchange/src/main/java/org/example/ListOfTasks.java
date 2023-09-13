@@ -26,7 +26,8 @@ public class ListOfTasks {
         tasks.put(4, "Remove money");
         tasks.put(5, "Set money");
         tasks.put(6, "Transfer money");
-        tasks.put(7, "Exit");
+        tasks.put(7, "Actual exchange rates");
+        tasks.put(8, "Exit");
     }
 
     void menu() {
@@ -43,7 +44,7 @@ public class ListOfTasks {
                     System.out.println("Select the currency, in which You want to see your total account balance.");
                     wallet.printListOfCurrencies();
                     int choosedCurrency = (int) scanner.scannerNumber();
-                    op.getSumOfMoney(wallet.listOfCurrencies, choosedCurrency);
+                    op.getSumOfMoney(choosedCurrency);
                     scanner.pressEnterToContinue();
                 }
                 case 3 -> {
@@ -51,11 +52,11 @@ public class ListOfTasks {
                     int choosedCurrency = (int) scanner.scannerNumber();
                     System.out.println("Enter amount of money:");
                     double amount = scanner.scannerNumber();
-                    if(wallet.listOfCurrencies.containsKey(choosedCurrency)){
-                        Money temp = op.addMoney(amount, wallet.listOfCurrencies.get(choosedCurrency));
-                        wallet.listOfCurrencies.put(choosedCurrency, temp);
+                    if(Wallet.listOfCurrencies.containsKey(choosedCurrency)){
+                        Money temp = Money.of(amount, Wallet.listOfCurrencies.get(choosedCurrency).getCurrency());
+                        Wallet.listOfCurrencies.put(choosedCurrency, Wallet.listOfCurrencies.get(choosedCurrency).add(temp));
                     }
-                    System.out.printf("%s %s %s%n", "Added",amount, wallet.listOfCurrencies.get(choosedCurrency).getCurrency());
+                    System.out.printf("%s %s %s%n", "Added",amount, Wallet.listOfCurrencies.get(choosedCurrency).getCurrency());
                     scanner.pressEnterToContinue();
                 }
                 case 4 -> {
@@ -63,11 +64,11 @@ public class ListOfTasks {
                     int choosedCurrency = (int) scanner.scannerNumber();
                     System.out.println("Enter amount of money:");
                     double amount = scanner.scannerNumber();
-                    if(wallet.listOfCurrencies.containsKey(choosedCurrency)){
-                        Money temp = op.removeMoney(amount, wallet.listOfCurrencies.get(choosedCurrency));
-                        wallet.listOfCurrencies.put(choosedCurrency, temp);
+                    if(Wallet.listOfCurrencies.containsKey(choosedCurrency)){
+                        Money temp = op.removeMoney(amount, Wallet.listOfCurrencies.get(choosedCurrency));
+                        Wallet.listOfCurrencies.put(choosedCurrency, temp);
                     }
-                    System.out.printf("%s %s %s%n", "Removed",amount, wallet.listOfCurrencies.get(choosedCurrency).getCurrency());
+                    System.out.printf("%s %s %s%n", "Removed",amount, Wallet.listOfCurrencies.get(choosedCurrency).getCurrency());
                     scanner.pressEnterToContinue();
                 }
                 case 5 -> {
@@ -75,19 +76,36 @@ public class ListOfTasks {
                     int choosedCurrency = (int) scanner.scannerNumber();
                     System.out.println("Enter amount of money:");
                     double amount = scanner.scannerNumber();
-                    if(wallet.listOfCurrencies.containsKey(choosedCurrency)){
-                        Money temp = op.setMoney(amount, wallet.listOfCurrencies.get(choosedCurrency));
-                        wallet.listOfCurrencies.put(choosedCurrency, temp);
+                    if(Wallet.listOfCurrencies.containsKey(choosedCurrency)){
+                        Money temp = op.setMoney(amount, Wallet.listOfCurrencies.get(choosedCurrency));
+                        Wallet.listOfCurrencies.put(choosedCurrency, temp);
                     }
-                    System.out.printf("%s %s %s %s%n", "The amount of", wallet.listOfCurrencies.get(choosedCurrency).getCurrency(), "has been set to", amount);
+                    System.out.printf("%s %s %s %s%n", "The amount of", Wallet.listOfCurrencies.get(choosedCurrency).getCurrency(), "has been set to", amount);
                     scanner.pressEnterToContinue();
                 }
                 case 6 -> {
-                    
+                    System.out.println("Convert currency from:");
+                    wallet.printListOfAmmountOfCurrencies();
+                    int firstCu = (int) scanner.scannerNumber();
+                    System.out.println("Enter amount of money to convert:");
+                    double amount = scanner.scannerNumber();
+                    System.out.println("Convert currency to:");
+                    wallet.printListOfAmmountOfCurrencies();
+                    int secondCu = (int) scanner.scannerNumber();
+                    op.convertCurrency(firstCu, secondCu, amount);
+                    wallet.printListOfAmmountOfCurrencies();
+                    scanner.pressEnterToContinue();
                 }
-                case 7 -> System.out.println("The program has ended");
+                case 7 ->{
+                    System.out.println("Select default currency:");
+                    wallet.printListOfCurrencies();
+                    int currency = (int) scanner.scannerNumber();
+                    op.printExchangeRates(currency);
+                    scanner.pressEnterToContinue();
+                }
+                case 8 -> System.out.println("The program has ended");
             }
-        } while (choice != 7);
+        } while (choice != 8);
     }
 
 }

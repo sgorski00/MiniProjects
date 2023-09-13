@@ -6,25 +6,41 @@ import org.javamoney.moneta.Money;
 import javax.money.*;
 
 public class Currencies {
-    private MonetaryAmount createCurrency(String currencyCode){
+    private static MonetaryAmount createCurrency(String currencyCode){
         CurrencyQuery query = CurrencyQueryBuilder.of().setCurrencyCodes(currencyCode).build();
         CurrencyUnit cu = Monetary.getCurrency(query);
         return FastMoney.of(0, cu);
     }
 
-    private final Money usdAmount = Money.from(createCurrency("USD"));
-    private final Money eurAmount = Money.from(createCurrency("EUR"));
-    private final Money plnAmount = Money.from(createCurrency("PLN"));
+    private static final Money usdAmount = Money.from(createCurrency("USD"));
+    private static final Money eurAmount = Money.from(createCurrency("EUR"));
+    private static final Money plnAmount = Money.from(createCurrency("PLN"));
 
-    protected Money usdAmount() {
+    private static final Money oneDollar = usdAmount().add(Money.of(1, usdAmount().getCurrency()));
+    private static final Money oneEuro = eurAmount().add(Money.of(1, eurAmount().getCurrency()));
+    private static final Money onePln = plnAmount().add(Money.of(1, plnAmount().getCurrency()));
+
+    protected static Money usdAmount() {
         return usdAmount;
     }
 
-    protected Money eurAmount() {
+    protected static Money eurAmount() {
         return eurAmount;
     }
 
-    protected Money plnAmount() {
+    protected static Money plnAmount() {
         return plnAmount;
+    }
+
+    public static Money oneDollar() {
+        return oneDollar;
+    }
+
+    public static Money oneEuro() {
+        return oneEuro;
+    }
+
+    public static Money onePln() {
+        return onePln;
     }
 }
