@@ -6,17 +6,18 @@ import javax.money.MonetaryAmount;
 import javax.money.convert.CurrencyConversion;
 import javax.money.convert.ExchangeRateProvider;
 import javax.money.convert.MonetaryConversions;
+import java.math.BigDecimal;
 
 public class Operations extends Wallet {
-    public Money addMoney(double value, MonetaryAmount currency) {
+    public Money addMoney(BigDecimal value, MonetaryAmount currency) {
         return Money.from(currency.add(Money.of(value, currency.getCurrency())));
     }
 
-    public Money removeMoney(double value, MonetaryAmount currency) {
+    public Money removeMoney(BigDecimal value, MonetaryAmount currency) {
         return Money.from(currency.subtract(Money.of(value, currency.getCurrency())));
     }
 
-    public Money setMoney(double value, MonetaryAmount currency) {
+    public Money setMoney(BigDecimal value, MonetaryAmount currency) {
         Money cur = Money.from(currency);
         currency = currency.subtract(cur);
         currency = addMoney(value, currency);
@@ -37,7 +38,7 @@ public class Operations extends Wallet {
         System.out.println("Your account balance: " + sum);
     }
 
-    public void convertCurrency(int firstCur, int secondCur, double amount) {
+    public void convertCurrency(int firstCur, int secondCur, BigDecimal amount) {
         if (listOfCurrencies.containsKey(firstCur) && listOfCurrencies.containsKey(secondCur)) {
             Money cur1 = listOfCurrencies.get(firstCur);
             Money cur2 = listOfCurrencies.get(secondCur);
