@@ -1,12 +1,12 @@
-package org.example;
+package org.example.wallet;
 
 import org.javamoney.moneta.Money;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Wallet extends Currencies{
-    static Map<Integer, Money> listOfCurrencies = new HashMap<>();
+public class Wallet extends Currencies {
+    private static Map<Integer, Money> listOfCurrencies = new HashMap<>();
     private static final Money usd = usdAmount();
     private static final Money eur = eurAmount();
     private static final Money pln = plnAmount();
@@ -21,13 +21,13 @@ public class Wallet extends Currencies{
         listOfCurrencies.put(3, eur());
     }
 
-    void printListOfCurrencies(){
+    public void printListOfCurrencies(){
         for(int i = 1; i<=listOfCurrencies.size(); i++){
             System.out.printf("%d. %s%n", i, listOfCurrencies.get(i).getCurrency());
         }
     }
 
-    void printListOfAmmountOfCurrencies(){
+    public void printListOfAmmountOfCurrencies(){
         for(int i = 1; i<=listOfCurrencies.size(); i++){
             System.out.printf("%d. %s%n", i, listOfCurrencies.get(i));
         }
@@ -43,5 +43,13 @@ public class Wallet extends Currencies{
 
     public static Money pln() {
         return pln;
+    }
+
+    public static Map<Integer, Money> listOfCurrencies() {
+        return listOfCurrencies;
+    }
+
+    public static void setListOfCurrencies(Map<Integer, Money> listOfCurrencies) {
+        Wallet.listOfCurrencies = listOfCurrencies;
     }
 }

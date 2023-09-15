@@ -1,19 +1,20 @@
 package org.example;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.InputMismatchException;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Input {
     private final Scanner scanner = new Scanner(System.in);
 
+    public String scannerText(){
+        return scanner.nextLine();
+    }
+
     public int scannerInt() {
-        int result = 0;
-        while (result == 0) {
+        int result = -1;
+        while (result == -1) {
             try {
                 result = scanner.nextInt();
             } catch (InputMismatchException ime) {
@@ -25,7 +26,7 @@ public class Input {
     }
 
     public BigDecimal scannerNumber() {
-        BigDecimal result = new BigDecimal(0);
+        BigDecimal result = BigDecimal.valueOf(0);
         while (result.intValue() == 0) {
             try {
                 result = scanner.nextBigDecimal();
@@ -45,6 +46,5 @@ public class Input {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        scanner.nextLine();
     }
 }

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.wallet;
 
 import org.javamoney.moneta.FastMoney;
 import org.javamoney.moneta.Money;

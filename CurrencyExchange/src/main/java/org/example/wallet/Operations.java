@@ -1,4 +1,4 @@
-package org.example;
+package org.example.wallet;
 
 import org.javamoney.moneta.Money;
 
@@ -25,13 +25,13 @@ public class Operations extends Wallet {
     }
 
     private CurrencyConversion convertTo(MonetaryAmount currency) {
-        ExchangeRateProvider rateProvider = MonetaryConversions.getExchangeRateProvider();
+        ExchangeRateProvider rateProvider = MonetaryConversions.getExchangeRateProvider("IMF");
         return rateProvider.getCurrencyConversion(currency.getCurrency());
     }
 
     public void getSumOfMoney(int covertToCurrency) {
-        Money sum = Money.of(0, listOfCurrencies.get(covertToCurrency).getCurrency());
-        for (Money m : listOfCurrencies.values()) {
+        Money sum = Money.of(0, listOfCurrencies().get(covertToCurrency).getCurrency());
+        for (Money m : listOfCurrencies().values()) {
             Money amountInDefaultCurrency = Money.from(m.with(convertTo(sum)));
             sum = sum.add(amountInDefaultCurrency);
         }
@@ -39,34 +39,34 @@ public class Operations extends Wallet {
     }
 
     public void convertCurrency(int firstCur, int secondCur, BigDecimal amount) {
-        if (listOfCurrencies.containsKey(firstCur) && listOfCurrencies.containsKey(secondCur)) {
-            Money cur1 = listOfCurrencies.get(firstCur);
-            Money cur2 = listOfCurrencies.get(secondCur);
+        if (listOfCurrencies().containsKey(firstCur) && listOfCurrencies().containsKey(secondCur)) {
+            Money cur1 = listOfCurrencies().get(firstCur);
+            Money cur2 = listOfCurrencies().get(secondCur);
             Money restOfCur1 = removeMoney(amount, cur1);
             cur1 = cur1.subtract(restOfCur1);
-            listOfCurrencies.put(firstCur, restOfCur1);
-            listOfCurrencies.put(secondCur, cur2.add(cur1.with(convertTo(cur2))));
+            listOfCurrencies().put(firstCur, restOfCur1);
+            listOfCurrencies().put(secondCur, cur2.add(cur1.with(convertTo(cur2))));
         }
     }
 
     public void printExchangeRates(int defaultCurrency) {
-        if (listOfCurrencies.containsKey(defaultCurrency)) {
+        if (listOfCurrencies().containsKey(defaultCurrency)) {
             CurrencyConversion conversionEUR = convertTo(eur());
             CurrencyConversion conversionPLN = convertTo(pln());
             CurrencyConversion conversionUSD = convertTo(usd());
-            if(listOfCurrencies.get(defaultCurrency).getCurrency() == usd().getCurrency()) {
+            if(listOfCurrencies().get(defaultCurrency).getCurrency() == usd().getCurrency()) {
                 MonetaryAmount convertedAmountUSDtoEUR = oneDollar().with(conversionEUR);
                 MonetaryAmount convertedAmountUSDtoPLN = oneDollar().with(conversionPLN);
                 System.out.println("USD - EUR: " + convertedAmountUSDtoEUR.getNumber());
                 System.out.println("USD - PLN: " + convertedAmountUSDtoPLN.getNumber());
             }
-            if(listOfCurrencies.get(defaultCurrency).getCurrency() == eur().getCurrency()) {
+            if(listOfCurrencies().get(defaultCurrency).getCurrency() == eur().getCurrency()) {
                 MonetaryAmount convertedAmountEURtoUSD = oneEuro().with(conversionUSD);
                 MonetaryAmount convertedAmountEURtoPLN = oneEuro().with(conversionPLN);
                 System.out.println("EUR - USD: " + convertedAmountEURtoUSD.getNumber());
                 System.out.println("EUR - PLN: " + convertedAmountEURtoPLN.getNumber());
             }
-            if(listOfCurrencies.get(defaultCurrency).getCurrency() == pln().getCurrency()) {
+            if(listOfCurrencies().get(defaultCurrency).getCurrency() == pln().getCurrency()) {
                 MonetaryAmount convertedAmountPLNtoEUR = onePln().with(conversionEUR);
                 MonetaryAmount convertedAmountPLNtoUSD = onePln().with(conversionUSD);
                 System.out.println("PLN - USD: " + convertedAmountPLNtoUSD.getNumber());
