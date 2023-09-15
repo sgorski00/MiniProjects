@@ -95,7 +95,14 @@ public class MainMenu extends ListOfTasks {
                     }
                     scanner.pressEnterToContinue();
                 }
-                case 0 -> System.out.println("The program has ended");
+                case 9 -> {
+                    System.out.println("You are logged out");
+                    choice = 0;
+                }
+                case 0 -> {
+                    System.out.println("The program has ended");
+                    System.exit(0);
+                }
             }
         } while (choice != 0);
     }

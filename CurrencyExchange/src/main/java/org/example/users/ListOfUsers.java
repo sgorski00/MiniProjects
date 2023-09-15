@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListOfUsers {
-    static final List<User> listOfUsers = new ArrayList<>();
+    private static List<User> listOfUsers = new ArrayList<>();
 
     static {
         User sgorski00 = new User("sgorski00", "12345");
@@ -15,5 +15,13 @@ public class ListOfUsers {
         listOfUsers.add(daga33);
         listOfUsers.add(latuszka);
         listOfUsers.add(yomenik);
+    }
+
+    public static List<User> listOfUsers() {
+        return listOfUsers;
+    }
+
+    public void setListOfUsers(List<User> listOfUsers) {
+        ListOfUsers.listOfUsers = listOfUsers;
     }
 }

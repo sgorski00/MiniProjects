@@ -23,6 +23,7 @@ public class ListOfTasks {
         tasks.put(5, "Set money");
         tasks.put(6, "Transfer money");
         tasks.put(7, "Actual exchange rates");
+        tasks.put(9, "Logout");
         tasks.put(0, "Exit");
     }
 
@@ -38,5 +39,6 @@ public class ListOfTasks {
         loginTasks.put(1, "LogIn");
         loginTasks.put(2, "Register");
         loginTasks.put(3, "Change Password");
+        loginTasks.put(0, "Print list of active users");
     }
 }

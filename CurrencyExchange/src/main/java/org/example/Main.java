@@ -9,7 +9,9 @@ public class Main {
     //    private static final Map<User, Wallet> walletOfUser = new HashMap<>();
 
     public static void main(String[] args) {
-        login.print();
-        menu.print();
+        while(true) {
+            login.print();
+            menu.print();
+        }
     }
 }

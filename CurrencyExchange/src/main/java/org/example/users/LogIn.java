@@ -14,7 +14,6 @@ public class LogIn{
         boolean isValid = false;
         String login;
         String password;
-        List<User> loggedUsers;
         while(!isValid){
             try {
                 login = getLogin();
@@ -22,12 +21,12 @@ public class LogIn{
                 String finalLogin = login;
                 String finalPassword = password;
 
-                loggedUsers = ListOfUsers.listOfUsers.stream()
+                User loggedUser = ListOfUsers.listOfUsers().stream()
                         .filter(user -> user.login().equals(finalLogin))
                         .filter(user -> user.password().equals(finalPassword))
-                        .collect(Collectors.toList());
+                        .toList().get(0);
 
-                System.out.println("You are logged as " + loggedUsers.get(loggedUsers.size()-1).login()+"\n");
+                System.out.println("You are logged as " + loggedUser.login()+"\n");
                 isValid = true;
             }catch(IndexOutOfBoundsException e){
                 System.err.println("Wrong login or password");
