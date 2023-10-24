@@ -12,6 +12,16 @@ public class StudentsGroup {
     @Column(name="class_name", nullable = false)
     private String className;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private Teacher tutor;
+
+    public StudentsGroup(){}
+
+    public StudentsGroup(String className) {
+        this.className = className;
+    }
+
+    public String className() {
+        return className;
+    }
 }

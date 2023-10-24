@@ -12,6 +12,15 @@ public class Subject {
     @Column(name="subject_name", nullable = false)
     private String subjectName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private Teacher teacher;
+
+    @OneToMany(cascade = CascadeType.MERGE)
+    private StudentsGroup studentsGroup;
+
+    public Subject(String subjectName, Teacher teacher, StudentsGroup studentsGroup) {
+        this.subjectName = subjectName;
+        this.teacher = teacher;
+        this.studentsGroup = studentsGroup;
+    }
 }

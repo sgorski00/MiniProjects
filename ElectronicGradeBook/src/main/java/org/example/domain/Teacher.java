@@ -1,7 +1,7 @@
 package org.example.domain;
 
 import jakarta.persistence.*;
-import org.example.NumberCheck;
+import org.example.NumberValidator;
 
 @Entity
 @Table(name = "teachers")
@@ -16,15 +16,25 @@ public class Teacher {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private StudentsGroup group;
 
     public Teacher(String firstName, String lastName) {
-        if(NumberCheck.doesContainsNumber(firstName) || NumberCheck.doesContainsNumber(lastName)){
+        if(NumberValidator.doesContainsNumber(firstName) || NumberValidator.doesContainsNumber(lastName)){
             throw new IllegalArgumentException("First or last name is empty");
         } else {
             this.firstName = firstName;
             this.lastName = lastName;
+        }
+    }
+
+    public Teacher(String firstName, String lastName, StudentsGroup group){
+        if(NumberValidator.doesContainsNumber(firstName) || NumberValidator.doesContainsNumber(lastName)){
+            throw new IllegalArgumentException("First or last name is empty");
+        } else {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.group = group;
         }
     }
 }

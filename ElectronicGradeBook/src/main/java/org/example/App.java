@@ -1,15 +1,16 @@
 package org.example;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+
+import org.example.domain.StudentsGroup;
+import org.example.repository.StudentRepository;
+import org.example.repository.StudentsGroupRepository;
 
 public class App {
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("myPersistence");
-        EntityManager em = emf.createEntityManager();
-        System.out.println("Hello world!");
-        em.close();
-        emf.close();
+        StudentsGroupRepository repo1 = new StudentsGroupRepository();
+        StudentRepository repo = new StudentRepository();
+        StudentsGroup group = repo1.findById(2);
+        repo.createNewStudent("Michał", "Zdebiak", group);
+        System.out.println("Hello");
     }
 }
